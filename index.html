@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
-
 <html>
 	<head>
 		<title>Eunma Studio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/chatbot.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
+
 	<body class="is-preload">
 
 		<!-- Wrapper -->
@@ -348,9 +349,24 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					</div>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<img src="images/logo.png" alt="EunmaStudio Logo" style="max-width: 100px;">
-						<p class="copyright">&copy; EunmaStudio.</p>
+				<a href="#" id="chatbot-toggle">
+					<img src="images/logo.png" alt="EunmaStudio Logo" style="max-width: 100px;">
+				</a>
+				<p class="copyright">&copy; EunmaStudio.</p>
+				<div id="chatbot-container" class="hidden" style="border: 1px solid #ccc; padding: 10px;">
+					<div class="chatbot-header">
+						<h2>EunmaBot_v1.0</h2>
+					</div>
+					<div class="chatbot-body">
+						<div id="chatbot-messages" style="height: 300px; overflow-y: auto;">
+							<!-- 챗봇 메시지가 표시되는 영역 -->
+						</div>
+						<div class="chatbot-input">
+							<input type="text" id="chatbot-input" placeholder="메시지를 입력하세요">
+							<button id="chatbot-send">전송</button>
+						</div>
+					</div>
+				</div>
 					</footer>
 
 			</div>
@@ -364,6 +380,6 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/chatbot.js"></script>
 	</body>
 </html>

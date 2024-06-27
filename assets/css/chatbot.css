@@ -1,0 +1,27 @@
+/* chatbot.css */
+#chatbot-container {
+    display: none;
+}
+
+#chatbot-container.visible {
+    display: block;
+}
+#chatbot-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chatbot-message {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+}
