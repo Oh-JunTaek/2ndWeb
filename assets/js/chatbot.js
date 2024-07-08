@@ -1,34 +1,37 @@
+// 1. 채팅 창 토글 버튼과 컨테이너 요소 선택
 var chatbotToggle = document.getElementById('chatbot-toggle');
 var chatbotContainer = document.getElementById('chatbot-container');
 
+// 2. 토글 버튼 클릭 이벤트 리스너 등록
 chatbotToggle.addEventListener('click', function() {
     chatbotContainer.classList.toggle('visible');
 });
-// 1. 입력 필드와 전송 버튼 요소 선택
+
+// 3. 입력 필드와 전송 버튼, 메시지 컨테이너 요소 선택
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotSendButton = document.getElementById('chatbot-send');
 const chatbotMessages = document.getElementById('chatbot-messages');
 
-// 2. 전송 버튼에 클릭 이벤트 리스너 등록
+// 4. 전송 버튼에 클릭 이벤트 리스너 등록
 chatbotSendButton.addEventListener('click', sendMessage);
 
-// 3. 이벤트 리스너 함수
-function sendMessage() {
+// 5. 메시지 전송 함수
+async function sendMessage() {
     const userMessage = chatbotInput.value.trim();
     if (userMessage) {
-        // 4. 챗봇의 응답 생성 및 화면 표시
+        // 사용자 메시지 화면에 표시
         addMessageToChat(userMessage, 'user-message');
-        const chatbotResponse = generateChatbotResponse(userMessage);
+
+        // 챗봇 응답 생성 및 화면에 표시
+        const chatbotResponse = await generateChatbotResponse(userMessage);
         addMessageToChat(chatbotResponse, 'chatbot-message');
 
-        // 5. 입력 필드 초기화
+        // 입력 필드 초기화
         chatbotInput.value = '';
-    } else {
-        // 첫 출력 메시지 표시
-        displayInitialMessage();
     }
 }
 
+// 6. 메시지 화면 추가 함수
 function addMessageToChat(message, messageClass) {
     const messageElement = document.createElement('div');
     messageElement.textContent = message;
@@ -37,34 +40,41 @@ function addMessageToChat(message, messageClass) {
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }
 
-function generateChatbotResponse(userMessage) {
-    // 여기에 챗봇의 응답 생성 로직 구현
-    return "챗봇의 응답";
+// 7. 챗봇 응답 생성 함수 (OpenAI API 호출)
+async function generateChatbotResponse(userMessage) {
+    const operatorInfo = `
+    You are chatting with EunmaBot, created by Eunma.
+    - MBTI: INFP
+    - 좋아하는 음식: 스시
+    - 취미: 독서와 등산
+    `;
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer YOUR_API_KEY`
+            },
+            body: JSON.stringify({
+                prompt: operatorInfo + `\nUser: ${userMessage}\nChatbot:`,
+                max_tokens: 150
+            })
+        });
+        
+        const data = await response.json();
+        return data.choices[0].text.trim();
+    } catch (error) {
+        console.error('Error generating chatbot response:', error);
+        return "Sorry, I couldn't process your request.";
+    }
 }
 
-function appendChatbotMessage(message) {
-    var messageContainer = document.createElement('div');
-    messageContainer.classList.add('chatbot-message-container');
-
-    // var icon = document.createElement('img');
-    // icon.src = 'bot.png';
-    // icon.alt = 'Chatbot Icon';
-    // icon.classList.add('chatbot-icon');
-
-    var messageElement = document.createElement('div');
-    messageElement.classList.add('chatbot-message');
-    messageElement.textContent = message;
-
-    // messageContainer.appendChild(icon);
-    messageContainer.appendChild(messageElement);
-
-    var chatbotMessages = document.getElementById('chatbot-messages');
-    chatbotMessages.appendChild(messageContainer);
-}
-
+// 8. 초기 메시지 출력 함수
 function displayInitialMessage() {
     const initialMessage = "Hello, I'm the EunmaBot. How can I assist you?";
     addMessageToChat(initialMessage, 'chatbot-message');
 }
 
-
+// 페이지 로드 시 초기 메시지 출력
+document.addEventListener('DOMContentLoaded', displayInitialMessage);
