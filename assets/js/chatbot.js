@@ -40,30 +40,19 @@ function addMessageToChat(message, messageClass) {
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }
 
-// 7. 챗봇 응답 생성 함수 (OpenAI API 호출)
+// 7. 챗봇 응답 생성 함수 (로컬 서버 호출)
 async function generateChatbotResponse(userMessage) {
-    const operatorInfo = `
-    You are chatting with EunmaBot, created by Eunma.
-    - MBTI: INFP
-    - 좋아하는 음식: 스시
-    - 취미: 독서와 등산
-    `;
-
     try {
-        const response = await fetch('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
+        const response = await fetch('/api/chatbot', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer YOUR_API_KEY`
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                prompt: operatorInfo + `\nUser: ${userMessage}\nChatbot:`,
-                max_tokens: 150
-            })
+            body: JSON.stringify({ message: userMessage })
         });
         
         const data = await response.json();
-        return data.choices[0].text.trim();
+        return data.reply;
     } catch (error) {
         console.error('Error generating chatbot response:', error);
         return "Sorry, I couldn't process your request.";
