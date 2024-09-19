@@ -22,7 +22,7 @@
 						</div>
 						<div class="content">
 							<div class="inner">
-								<h1>wellcome</h1>
+								<h1>welcome</h1>
 								<p>안녕하세요. 개발자 Eunma의 작업공간 입니다.<br />
 									 <a href="https://github.com/Oh-JunTaek">github</a> 에 방문하시면 다양한 작업물을 볼 수 있습니다.<br />
 								하단 여우아이콘을 클릭하면 현재 개발중인 챗봇이 나옵니다.(미완성)</p>
@@ -385,11 +385,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					</div>
 					<div class="chatbot-body">
 						<div id="chatbot-messages" style="height: 300px; overflow-y: auto;">
-							<div class="chatbot-message-container">
-								<!-- <img src="bot.png" alt="Chatbot Icon" class="chatbot-icon"> -->
-								<div class="chatbot-message">챗봇의 응답</div>
-							</div>
-							<!-- 추가로 표시될 챗봇 메시지들 -->
+							<!-- 메시지가 여기에 추가됩니다. -->
 						</div>
 						<div class="chatbot-input">
 							<input type="text" id="chatbot-input" placeholder="메시지를 입력하세요">
@@ -397,19 +393,64 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						</div>
 					</div>
 				</div>
-					</footer>
-
 			</div>
-
+		</div>
+	
 		<!-- BG -->
-			<div id="bg"></div>
-
+		<div id="bg"></div>
+	
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="assets/js/chatbot.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/chatbot.js"></script>
+		<script>
+			// 챗봇 토글 기능
+			document.getElementById('chatbot-toggle').addEventListener('click', function() {
+				var chatbotContainer = document.getElementById('chatbot-container');
+				chatbotContainer.classList.toggle('hidden');
+			});
+	
+			// 메시지 전송 및 서버와 통신
+			document.getElementById('chatbot-send').addEventListener('click', function() {
+				sendMessage();
+			});
+	
+			document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+				if (e.key === 'Enter') {
+					sendMessage();
+				}
+			});
+	
+			function sendMessage() {
+				var input = document.getElementById('chatbot-input');
+				var message = input.value.trim();
+				if (message !== '') {
+					var messagesContainer = document.getElementById('chatbot-messages');
+					messagesContainer.innerHTML += '<div><strong>You:</strong> ' + message + '</div>';
+					input.value = '';
+	
+					// 서버에 메시지 전송
+					fetch('http://localhost:8000/chat/', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({ message: message })
+					})
+					.then(response => response.json())
+					.then(data => {
+						messagesContainer.innerHTML += '<div><strong>Bot:</strong> ' + data.reply + '</div>';
+						messagesContainer.scrollTop = messagesContainer.scrollHeight;
+					})
+					.catch(error => {
+						messagesContainer.innerHTML += '<div><strong>Bot:</strong> Error occurred.</div>';
+						messagesContainer.scrollTop = messagesContainer.scrollHeight;
+					});
+				}
+			}
+		</script>
 	</body>
-</html>
+	</html>
