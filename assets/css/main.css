@@ -1140,9 +1140,12 @@ input, select, textarea {
 			-ms-transition-delay: 0.75s;
 			transition-delay: 0.75s;
 			background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("../../images/overlay.png");
-			background-size: auto, 256px 256px;
-			background-position: center, center;
-			background-repeat: no-repeat, repeat;
+			background-size: auto,
+ 256px 256px;
+			background-position: center,
+ center;
+			background-repeat: no-repeat,
+ repeat;
 			z-index: 2;
 		}
 
@@ -1655,4 +1658,49 @@ input, select, textarea {
 
 		body.is-preload #footer {
 			opacity: 0;
+		}
+		/* 드롭다운 버튼 스타일 */
+		.accordion {
+			background-color: #444; /* 어두운 배경 */
+			color: white; /* 밝은 글씨색 */
+			cursor: pointer;
+			padding: 15px;
+			width: 100%;
+			border: none;
+			text-align: left;
+			outline: none;
+			font-size: 16px;
+			transition: 0.4s;
+			white-space: normal; /* 텍스트가 넘치지 않도록 설정 */
+			word-wrap: break-word; /* 자동 줄바꿈 */
+			display: flex; /* 텍스트 정렬을 쉽게 조정 */
+			align-items: center; /* 세로 중앙 정렬 */
+		}
+		
+		/* 버튼 hover & active 효과 */
+		.accordion:hover, .active {
+			background-color: #666;
+		}
+
+		/* 펼쳐지는 컨텐츠 스타일 */
+		.panel {
+			padding: 15px;
+			display: none;
+			background-color: #222; /* 다크모드에 맞춘 배경 */
+			overflow: hidden;
+			color: white; /* 글씨 색을 흰색으로 변경 */
+		}
+
+		/* 리스트 스타일 수정 */
+		.panel ul {
+			padding: 0;
+			list-style-type: none;
+		}
+
+		.panel ul li {
+			background-color: #3b5998; /* 블루 계열 배경 */
+			color: white;
+			padding: 8px;
+			margin: 5px 0;
+			border-radius: 5px;
 		}
