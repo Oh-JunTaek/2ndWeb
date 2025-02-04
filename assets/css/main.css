@@ -1704,3 +1704,37 @@ input, select, textarea {
 			margin: 5px 0;
 			border-radius: 5px;
 		}
+
+		/* 스킬 섹션 아이콘 */
+		.skills-section {
+			text-align: center;
+			margin: 40px 0;
+		}
+		
+		.skills-table {
+			width: 100%;
+			max-width: 600px;
+			margin: auto;
+			border-collapse: collapse;
+		}
+		
+		.skills-table td {
+			border: 1px solid #ddd;
+			padding: 10px;
+			text-align: center;
+		}
+		
+		.skills-table th {
+			background-color: #333;
+			color: white;
+		}
+		
+		.skill-icon {
+			width: 40px;
+			height: 40px;
+		}
+		
+		.stars {
+			font-size: 1.2em;
+			color: #ffcc00;
+		}
