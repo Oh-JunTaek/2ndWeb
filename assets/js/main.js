@@ -400,18 +400,76 @@
 
 })(jQuery);
 
-// 아코디언 기능
-document.addEventListener("DOMContentLoaded", function() {
-    var acc = document.getElementsByClassName("accordion");
-    for (var i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+// ✅ 아코디언 초기화 (기존 코드 그대로 유지 가능)
+document.addEventListener("DOMContentLoaded", function () {
+    const acc = document.getElementsByClassName("accordion");
+    for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
             this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
+            const panel = this.nextElementSibling;
+            panel.style.display = panel.style.display === "block" ? "none" : "block";
         });
     }
 });
+
+// // ✅ 타임라인 차트 별도 정의 (분리)
+// document.addEventListener("DOMContentLoaded", function () {
+//     const ctx = document.getElementById("timelineChart");
+//     if (ctx) {
+//         new Chart(ctx.getContext("2d"), {
+//             type: "bar",
+//             data: {
+//                 labels: ["도원고", "경북대", "병역", "인포뱅크"],
+//                 datasets: [{
+//                     label: "타임라인",
+//                     data: [
+//                         { x: 2009, x2: 2012, y: "도원고" },
+//                         { x: 2013, x2: 2018, y: "경북대" },
+//                         { x: 2014, x2: 2016, y: "병역" },
+//                         { x: 2025, x2: 2025.4, y: "인포뱅크" }
+//                     ],
+//                     backgroundColor: ["#20e0c0", "#66b3ff", "#aaaaaa", "#ff6600"],
+//                     borderRadius: 5,
+//                     barThickness: 20
+//                 }]
+//             },
+//             options: {
+//                 indexAxis: "y",
+//                 responsive: true,
+//                 maintainAspectRatio: false,
+//                 scales: {
+//                     x: {
+//                         type: "linear",
+//                         min: 2008,
+//                         max: 2026,
+//                         ticks: { stepSize: 1 },
+//                         title: {
+//                             display: true,
+//                             text: "년도"
+//                         }
+//                     },
+//                     y: {
+//                         title: {
+//                             display: true,
+//                             text: "이력 항목"
+//                         }
+//                     }
+//                 },
+//                 plugins: {
+//                     legend: { display: false },
+//                     title: {
+//                         display: true,
+//                         text: "Eunma 경력 타임라인"
+//                     },
+//                     tooltip: {
+//                         callbacks: {
+//                             label: function (ctx) {
+//                                 return `${ctx.raw.y}: ${ctx.raw.x} ~ ${ctx.raw.x2}`;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// });
